@@ -1,0 +1,9 @@
+*.aux
+*.fdb*
+*.fls
+*.idx
+*.ilg
+*.ind
+*.log
+*.pdf
+*.gz
