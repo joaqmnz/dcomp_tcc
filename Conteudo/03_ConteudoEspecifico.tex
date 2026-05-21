@@ -529,6 +529,30 @@ Por fim, há um método que centraliza e comanda as inserções dos Avaliadores 
 Com isso, tanto a inserção quanto remoção de novos Avaliadores e a redivisão dos Grupos por meior da edição do TAF passam pelo mesmo tratamento recursivo, unificando os métodos de ambas funcionalidades, solucionando o \textit{bug} mencionado.
 
 \subsection{Adicionar Militares por arquivo CSV}
+
+Inicialmente, o projeto já se preocupava com a possibilidade de carregar dados para a aplicação de forma que o usuário não utilizasse a interface gráfica para cadastrar, um a um, os Militares presentes na Instituição. Pensando nisso, foi desenvolvido uma funcionalidade para carregar os usuários para o sistema por meio de planilhas em Excel, o qual corroborava com o objetivo almejado, afinal, seria possível criar um único arquivo contendo todas as informações para vários Militares e ser possível cadastrá-los por meio do \textit{upload} desta planilha.
+
+% Pesquisar sobre a performance de arquivos CSV para migracao de dados
+A proposta incial seria obter os dados dos Militares a partir de informações presentes no Banco de Dados da própria Instituição, o que seria necessário obter arquivos CSV para realizar essa injeção de dados. Esses arquivos são característicos por serem leves e fáceis de serem interpretados pelos humanos, por isso foi o tipo adotado à essa nova funcionalidade, sem contar na sua performance para migração de dados.
+
+Para este trabalho, foi necessário envolver a API em Python, além de inserir novas opções no \textit{Frontend} para a inserção de arquivos CSV no cadastro de Militares, adotando algumas estratégias para sinalizar ao usuário qual tipo de arquivo estava sendo utilizado naquele momento da criação. Uma dessas estratégias consiste em modifiar o tipo do arquivo em todos os textos presentes na funcionalidade, como mostra a \autoref{fig:importar_militares_excel} para a funcionalidade Excel e a \autoref{fig:importar_militares_csv} para a funcionalidade CSV. Uma outra estratégia é permitir que o usuário realize o \textit{download} de um arquivo exemplo para preenchimento das informações.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.25]{./Imagens/tafeito/api/importar_militares_excel.png}
+	\caption{Importar Militares com arquivos Excel}
+	\label{fig:importar_militares_excel}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.25]{./Imagens/tafeito/api/importar_militares_csv.png}
+	\caption{Importar Militares com arquivos CSV}
+	\label{fig:importar_militares_csv}
+\end{figure}
+
+Como citado anteriormente, foi envolvido a parte da API em Python, que é exclusiva ao gerenciamento desta funcionalidade de cadastro de Militares por arquivos (CSV e Excel) devido à facilidade de manipulação de dados utilizando esta linguagem. A biblioteca disponibilizada pelo Python para manipular arquios CSV foi mais que suficiente para o desenvolvimento desta feature, além disso, a existência de uma API em Python para o TAFeito traz avanços consideráveis em questão de manipulação de dados, propiciando para futuras demandas.
+
 \subsection{Execução em Tempo Real}
 \subsection{Remoção de Curso vinculado à Turma}
 \subsection{Edição do Nome da Unidade}
