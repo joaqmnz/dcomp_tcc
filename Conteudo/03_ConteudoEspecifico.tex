@@ -556,4 +556,18 @@ Como citado anteriormente, foi envolvido a parte da API em Python, que é exclus
 \subsection{Execução em Tempo Real}
 \subsection{Remoção de Curso vinculado à Turma}
 \subsection{Edição do Nome da Unidade}
+
+Como a aplicação permite que o usuário com maior papel a ser atuado (Coordenador) altere a maior parte das informações presentes no sistema, é viável que possíveis erros ocorridos devido às regras de negócio sejam relatados de forma clara e específica para não causar uma confusão ao mesmo. Desta forma, também é preferível que possíveis erros não voltados às regras de negócio, como incompatibilidade de dados, dados incompletos ou inexistentes, também sejam relatados ao usuário para que ele retome sua atenção à atividade executada. De fato, não há como tratar todas as ocorrências de erros existentes, afinal, o projeto possui uma alta complexidade em sua regra de negócio, porém, durante o desenvolvimento de POC II, houve uma preocupação em mitigar a maioria destes erros.
+
+Ao final dos testes ocorridos em POC II, foi relatado um erro desconhecido ao usuário, pois não houve tratamento para ele. Este erro consistia na ação de edição do Nome de uma Unidade existente, onde retornava o erro "\textit{Cannot read properties of undefined (reading 'toString')}". Como uma Unidade possui uma relação com Militar, no caso, um Comandante, qualquer alteração no seu campo seria necessário enviar a matrícula deste Comandante, devido às verificações feitas pela API desenvolvida. O erro relatado consistia no envio da solicitação de edição, porém, sem a matrícula exigida.
+
+Como solução, foi atribuída uma verificação para a existência dessa matrícula, além de inserí-la no \textit{payload} enviado à API, como relatado na \autoref{fig:editar_nome_unidade}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{./Imagens/tafeito/api/editar_nome_unidade.png}
+	\caption{Edição do Nome da Unidade}
+	\label{fig:editar_nome_unidade}
+\end{figure}
+
 \subsection{Visualização do TAF pelo Avaliador}
