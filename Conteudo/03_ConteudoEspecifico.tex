@@ -554,7 +554,7 @@ Para este trabalho, foi necessário envolver a API em Python, além de inserir n
 Como citado anteriormente, foi envolvido a parte da API em Python, que é exclusiva ao gerenciamento desta funcionalidade de cadastro de Militares por arquivos (CSV e Excel) devido à facilidade de manipulação de dados utilizando esta linguagem. A biblioteca disponibilizada pelo Python para manipular arquios CSV foi mais que suficiente para o desenvolvimento desta feature, além disso, a existência de uma API em Python para o TAFeito traz avanços consideráveis em questão de manipulação de dados, o que propicia futuras demandas.
 
 \subsection{Execução em Tempo Real}
-\subsection{Remoção de Curso vinculado à Turma}
+
 \subsection{Edição do Nome da Unidade}
 
 Como a aplicação permite que o usuário com maior papel a ser atuado (Coordenador) altere a maior parte das informações presentes no sistema, é viável que possíveis erros ocorridos devido às regras de negócio sejam relatados de forma clara e específica para não causar uma confusão ao mesmo. Desta forma, também é preferível que possíveis erros não voltados às regras de negócio, como incompatibilidade de dados, dados incompletos ou inexistentes, também sejam relatados ao usuário para que ele retome sua atenção à atividade executada. De fato, não há como tratar todas as ocorrências de erros existentes, afinal, o projeto possui uma alta complexidade em sua regra de negócio, porém, durante o desenvolvimento de POC II, houve uma preocupação em mitigar a maioria destes erros.
@@ -568,6 +568,19 @@ Como solução, foi atribuída uma verificação para a existência dessa matrí
 	\includegraphics[scale=0.5]{./Imagens/tafeito/api/editar_nome_unidade.png}
 	\caption{Edição do Nome da Unidade}
 	\label{fig:editar_nome_unidade}
+\end{figure}
+
+\subsection{Remoção de Curso vinculado à Turma}
+
+Voltando à uma das regras de negócio da aplicação, há o conceito de Turmas e Cursos. Essas Turmas são uma junção de Militares que almejam um objetivo em comum, seja conseguir entrar em uma Unidade, ou sejam recém-ingressos na Instituição. Já os Cursos, são criados para que ponha um signicado à uma Turma, por isso que há uma relação entre ambos. Como mencionado na \autoref{sub:exclusao_unidade_lotacao_militar}, erros de Banco de Dados jamais deverão ser direcionados ao usuário, pois eles não trazem significado, nem uma compreensão do por quê aconteceu aquele problema, devendo ser tratados durante o desenvolvimento da API. Portanto, como citado na subseção anterior, nem todos os erros são tratados durante o desenvolvimento.
+
+O \textit{bug} relatado neste trabalho consiste na remoção de um Curso que possui uma Turma vinculada, ou seja, da perspectiva da regra de negócio esta ação deve ser impedida e tratada, mas, como relatado, não houve tratamento de sua execução. Por sorte, a resolução consiste em apenas uma verificação feita antes da remoção de um Curso, garantindo que ele não possui um relacionamento sequer com uma Turma, como pode ser visto na \autoref{fig:remocao_curso_turma}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{./Imagens/tafeito/api/remocao_curso_com_turma.png}
+	\caption{Remoção de Curso Atrelado à uma Turma}
+	\label{fig:remocao_curso_turma}
 \end{figure}
 
 \subsection{Visualização do TAF pelo Avaliador}
