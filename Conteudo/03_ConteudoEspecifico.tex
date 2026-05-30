@@ -599,3 +599,28 @@ Um dos problemas relatados pela equipe de testes durante POC II foi que não era
 \end{figure}
 
 \subsection{Visualizações dos TAFs pelos Perfis Gestor, Coordenador e Avaliador}
+
+Ainda sobre segurança, é importante fazer com que o usuário possua acesso de dados que estão diretamente/indiretamente vinculados a ele. Esse conceito é importante porque a aplicação não deve permitir que haja um vazamento de dados para perfis que não poderiam ter permissão de acessá-los, além de que também não deve existir a possibilidade do usuário ter acesso a informações, se tratando de um contexto militar, de outras Unidades ou de TAFs aos quais ele nunca participou ou gerenciou.
+
+Durante os testes foi relatado que esse tipo de vazamento estava ocorrendo da versão \textit{Web}, onde um Coordenador conseguia visualizar informações de Atestados, Recursos ou até TAFs aos quais não faziam parte do seu ciclo, já que apenas Coordenadores podem realizar criações desses TAFs. Da mesma forma, um Gestor não deveria visualiar tais informações, só que de outras Unidades. Já para o caso dos Avaliadores, estava sendo permitido a exibição de TAFs aos quais ele não fazia parte como Avaliador.
+
+O que ficou claro foi que as rotas utilizadas para realizar esse gerenciamento e verificações de permissões se davam de forma genérica, considerando, em alguns casos, apenas a existência do Gestor. Por isso, para este trabalho, a responsabilidade foi de mitigar esses vazamentos, adequando tanto os \textit{endpoints} utilizados, quanto a realização de filtragens de TAFs que possuem relações diretas com o usuário, para o caso dos Avalidores.
+
+Começando pelas exibições dos TAFs, foi necessário realizar alterações tanto na API quanto na página \textit{Web}, onde, para o casos dos Avaliadores, houve uma filtragem para identificar apenas os TAFs em que o usuário atuava como tal, relatado na \autoref{fig:filtragem_tafs_avaliador}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{./Imagens/tafeito/api/tafs_avaliador.png}
+	\caption{Filtragem de TAFs para perfil Avaliador}
+	\label{fig:filtragem_tafs_avaliador}
+\end{figure}
+
+Já para os outros perfis, foi necessário realizar uma verificação para identificar qual o perfil do usuário para obter a rota correta e exibir os resultados, relatado na \autoref{fig:filtragem_tafs__gestor_coordenador}, onde o mesmo mecanismo de busca foi utilizado para as funcionalidades de Atestado, Recurso e Resultado.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.57]{./Imagens/tafeito/api/tafs_perfis_gestor_coordenador.png}
+	\caption{Filtragem de TAFs para perfis Gestor, Coordenador e Avaliador}
+	\label{fig:filtragem_tafs__gestor_coordenador}
+\end{figure}
+
